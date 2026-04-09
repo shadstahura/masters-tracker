@@ -38,10 +38,23 @@
   /* Player ticker */
   .m-ticker{
     background:#fff;border-bottom:1px solid #e5e7eb;
-    display:flex;overflow-x:auto;padding:8px 12px;gap:0;
+    display:flex;overflow-x:auto;padding:8px 12px;gap:0;min-height:54px;
     scrollbar-width:none;
   }
   .m-ticker::-webkit-scrollbar{display:none}
+  .ticker-label{
+    display:flex;align-items:center;gap:8px;padding:6px 18px 6px 4px;
+    border-right:1px solid #e5e7eb;flex-shrink:0;
+    font-family:'Playfair Display',serif;color:var(--green-dk);
+  }
+  .ticker-label .star{font-size:22px;color:var(--gold)}
+  .ticker-label .stack{display:flex;flex-direction:column;line-height:1}
+  .ticker-label .top{font-size:11px;font-weight:900;letter-spacing:1.5px}
+  .ticker-label .bot{font-size:11px;font-weight:900;letter-spacing:1.5px;color:var(--gold)}
+  .ticker-empty{
+    display:flex;align-items:center;padding:0 18px;
+    font-size:11px;color:var(--muted);font-style:italic;
+  }
   .m-ticker .pill-status{
     display:flex;align-items:center;gap:6px;padding:8px 14px;
     border-right:1px solid #e5e7eb;flex-shrink:0;font-size:11px;
@@ -76,26 +89,32 @@
   .m-nav{
     background:#fff;border-bottom:1px solid #e5e7eb;
     display:flex;align-items:center;justify-content:space-between;
-    padding:14px 80px;position:relative;
+    padding:10px 32px;position:relative;
   }
-  .m-nav .left, .m-nav .right{display:flex;gap:28px;align-items:center}
+  .m-nav .left, .m-nav .right{display:flex;gap:22px;align-items:center}
   .m-nav a{
-    color:var(--green-dk);text-decoration:none;font-size:13px;
-    font-weight:700;letter-spacing:.5px;cursor:pointer;
-    text-transform:none;
+    color:var(--green-dk);text-decoration:none;font-size:11px;
+    font-weight:600;letter-spacing:1.5px;cursor:pointer;
+    text-transform:uppercase;
+    transition:color .15s;
   }
   .m-nav a:hover{color:var(--gold)}
   .m-nav .center-logo{
     position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
     display:flex;align-items:center;gap:10px;
   }
-  .m-nav .center-logo .flag{font-size:24px;color:var(--gold)}
-  .m-nav .center-logo .word{
-    font-family:'Playfair Display',serif;font-weight:900;font-size:26px;
+  .m-nav .center-logo span{
+    font-family:'Playfair Display',serif;font-weight:900;font-size:24px !important;
     color:var(--green-dk);font-style:italic;letter-spacing:.5px;
   }
-  .m-nav .acct{display:flex;align-items:center;gap:6px}
-  .m-nav .acct svg{width:14px;height:14px}
+  .m-nav .acct{display:flex;align-items:center;gap:5px}
+  .m-nav .acct svg{width:12px;height:12px}
+  @media (max-width:900px){
+    .m-nav{padding:10px 16px;flex-wrap:wrap;gap:8px}
+    .m-nav .center-logo{position:static;transform:none;order:-1;width:100%;justify-content:center;margin-bottom:4px}
+    .m-nav .left, .m-nav .right{flex:1;justify-content:center;gap:14px}
+    .m-nav a{font-size:10px;letter-spacing:1px}
+  }
 
   /* Big Augusta hero */
   .m-hero{
@@ -254,9 +273,9 @@
   }
 
   /* PROFILE BUTTON */
-  .profile-btn{
-    position:fixed;top:62px;right:18px;z-index:50;
-    width:46px;height:46px;border-radius:50%;
+  .profile-btn{display:none !important;
+    position:fixed;top:54px;right:14px;z-index:50;
+    width:36px;height:36px;border-radius:50%;
     background:linear-gradient(180deg,var(--gold-lt),var(--gold));
     color:var(--green-darker);border:2px solid var(--gold);cursor:pointer;
     display:flex;align-items:center;justify-content:center;
@@ -270,7 +289,7 @@
     font-size:20px;
   }
   .profile-menu{
-    position:fixed;top:74px;right:18px;z-index:55;
+    position:fixed;top:60px;right:24px;z-index:55;
     background:linear-gradient(180deg,var(--green-darker),#021a08);
     border:1px solid var(--gold);border-radius:12px;
     padding:14px;min-width:200px;
@@ -375,7 +394,7 @@
   .drawer-item .chev{margin-left:auto;transition:transform .2s;font-size:11px;color:var(--gold-lt)}
   .drawer-item.expanded .chev{transform:rotate(90deg)}
 
-  main{max-width:1100px;margin:0 auto;padding:24px 16px 60px}
+  main{max-width:1100px;margin:0 auto;padding:18px 16px 60px}
 
   .card{
     background:#fff;border-radius:18px;
@@ -993,9 +1012,12 @@
 
 <!-- Player ticker -->
 <div class="m-ticker" id="mTicker">
-  <div class="pill-status">
-    <div class="ic">RI</div>
-    <div class="stack"><div class="top">⭐ All Players</div><div class="bot">★ Favorites</div></div>
+  <div class="ticker-label">
+    <span class="star">★</span>
+    <div class="stack">
+      <div class="top">FAVORITE</div>
+      <div class="bot">GOLFERS</div>
+    </div>
   </div>
 </div>
 
@@ -1005,10 +1027,9 @@
     <a id="navMenu">Menu</a>
     <a id="navLb">Leader Board</a>
     <a id="navWatch">Watch Live</a>
-    <a id="navCaptains">Captains</a>
   </div>
   <div class="center-logo" id="navHome">
-    <span style="font-family:'Playfair Display',Georgia,serif;font-weight:900;font-size:32px;color:var(--green-dk);font-style:italic;letter-spacing:.5px">Masters</span>
+    <img src="./masters-logo.png" alt="Masters" style="height:54px;width:auto;display:block">
   </div>
   <div class="right">
     <a class="acct" id="navAccount">
@@ -1018,10 +1039,6 @@
   </div>
 </div>
 
-<!-- Big hero -->
-<div class="m-hero">
-  <div class="augusta-bg" id="augustaBg"></div>
-</div>
 <div class="gold-stripe"></div>
 
 <div class="hero" style="display:none">
@@ -1053,8 +1070,8 @@
     <button class="drawer-item" data-tab="beat"><span class="icon">🎯</span>Beat the Bookie</button>
   </div>
   <div class="drawer-section" id="drawerCaptainsSection">
-    <span class="label">Captains</span>
-    <div class="drawer-cap-list open" id="drawerCapList"></div>
+    <button class="drawer-item" id="capExpand"><span class="icon">👤</span>Captains<span class="chev">▶</span></button>
+    <div class="drawer-cap-list" id="drawerCapList"></div>
   </div>
 </aside>
 
@@ -1480,6 +1497,10 @@ capList.innerHTML = Object.keys(TEAMS).map(m=>`<button class="drawer-cap-item" d
 capList.querySelectorAll(".drawer-cap-item").forEach(btn=>{
   btn.addEventListener("click", ()=>{ showTab(btn.dataset.cap); closeDrawer(); });
 });
+document.getElementById("capExpand").addEventListener("click", function(){
+  this.classList.toggle("expanded");
+  capList.classList.toggle("open");
+});
 function showTab(name){
   document.querySelectorAll(".drawer-item[data-tab]").forEach(t=>t.classList.toggle("active", t.dataset.tab===name));
   document.querySelectorAll(".drawer-cap-item").forEach(t=>t.classList.toggle("active", t.dataset.cap===name));
@@ -1498,6 +1519,19 @@ function showTab(name){
 
 // ===== SIGN-IN =====
 function getMe(){ return localStorage.getItem("mt_me") || ""; }
+
+// ===== FAVORITES =====
+function favKey(){ return "mt_favs_" + (getMe()||"_anon"); }
+function getFavs(){ try{return JSON.parse(localStorage.getItem(favKey())||"[]")}catch{return []} }
+function isFav(name){ return getFavs().includes(norm(name)); }
+function toggleFav(name){
+  const favs = getFavs();
+  const n = norm(name);
+  const i = favs.indexOf(n);
+  if (i>=0) favs.splice(i,1); else favs.push(n);
+  localStorage.setItem(favKey(), JSON.stringify(favs));
+  if (LATEST) render();
+}
 function setMe(v){ localStorage.setItem("mt_me", v); renderSignin(); renderProfile(); renderChallenges(); }
 function renderProfile(){
   const btn = document.getElementById("profileBtn");
@@ -1919,28 +1953,37 @@ function render(){
   document.getElementById("eventMeta").textContent =
     `${comp.status?.type?.detail || ev.name}`;
 
-  // Top ticker — full field with score + thru/tee time
+  // Top ticker — ONLY favorites
   const ticker = document.getElementById("mTicker");
   if (ticker){
-    ticker.querySelectorAll(".player-tile").forEach(el=>el.remove());
-    players.forEach((p,i)=>{
-      const photo = p.headshot || "https://a.espncdn.com/combiner/i?img=/i/headshots/nophoto.png&w=80&h=80";
-      const tile = document.createElement("div");
-      tile.className = "player-tile" + (p.owner?" fav":"");
-      const last = p.name.split(" ").pop().toUpperCase();
-      const scoreCls = parClass(p.toPar);
-      const scoreTxt = fmtPar(p.toPar);
-      const thruTxt = p.thru || "—";
-      tile.innerHTML = `
-        <img src="${photo}" onerror="this.style.visibility='hidden'">
-        <div class="info">
-          <div class="name">${last}</div>
-          <div class="time"><span class="${scoreCls}" style="font-weight:800">${scoreTxt}</span> · ${thruTxt}</div>
-        </div>
-        <div class="right"><div class="star">★</div></div>`;
-      tile.addEventListener("click", ()=>showTab("leaderboard"));
-      ticker.appendChild(tile);
-    });
+    ticker.querySelectorAll(".player-tile, .ticker-empty").forEach(el=>el.remove());
+    const favs = getFavs();
+    const favPlayers = players.filter(p=>favs.includes(norm(p.name)));
+    if (!favPlayers.length){
+      const empty = document.createElement("div");
+      empty.className = "ticker-empty";
+      empty.textContent = "Tap the ★ next to any golfer on the Leaderboard to add them here";
+      ticker.appendChild(empty);
+    } else {
+      favPlayers.forEach((p)=>{
+        const photo = p.headshot || "https://a.espncdn.com/combiner/i?img=/i/headshots/nophoto.png&w=80&h=80";
+        const tile = document.createElement("div");
+        tile.className = "player-tile fav";
+        const last = p.name.split(" ").pop().toUpperCase();
+        const scoreCls = parClass(p.toPar);
+        const scoreTxt = fmtPar(p.toPar);
+        const thruTxt = p.thru || "—";
+        tile.innerHTML = `
+          <img src="${photo}" onerror="this.style.visibility='hidden'">
+          <div class="info">
+            <div class="name">${last}</div>
+            <div class="time"><span class="${scoreCls}" style="font-weight:800">${scoreTxt}</span> · ${thruTxt}</div>
+          </div>
+          <div class="right"><div class="star">★</div></div>`;
+        tile.addEventListener("click", ()=>showTab("leaderboard"));
+        ticker.appendChild(tile);
+      });
+    }
   }
 
   // Home Masters leaderboard (top 20)
@@ -1978,8 +2021,12 @@ function render(){
     const tr = document.createElement("tr");
     if (p.cut) tr.classList.add("cut");
     tr.style.cursor = "pointer";
+    const fav = isFav(p.name);
     tr.innerHTML = `<td class="rank">${p.pos||""}</td>
-      <td><div class="player-row"><img class="mini-photo" src="${photo}" onerror="this.style.visibility='hidden'"><span>${p.name}</span></div></td>
+      <td><div class="player-row">
+        <span class="fav-star" data-fav="${escapeHtml(p.name)}" style="font-size:18px;cursor:pointer;color:${fav?'var(--gold)':'#cbd5e1'};margin-right:6px;text-shadow:${fav?'0 0 8px rgba(212,167,44,.5)':'none'}">★</span>
+        <img class="mini-photo" src="${photo}" onerror="this.style.visibility='hidden'"><span>${p.name}</span>
+      </div></td>
       <td>${p.owner?`<span class="pill cap">${p.owner}</span>`:""}</td>
       <td>${p.thru||""}</td>
       <td class="score-cell">${r[0]}</td>
@@ -2008,7 +2055,12 @@ function render(){
         </div>
       </div>
     </td>`;
-    tr.addEventListener("click", ()=>{
+    tr.addEventListener("click", e=>{
+      if (e.target.classList.contains("fav-star")){
+        e.stopPropagation();
+        toggleFav(e.target.dataset.fav);
+        return;
+      }
       detail.style.display = detail.style.display==="none" ? "table-row" : "none";
     });
     flb.appendChild(tr);
@@ -2523,13 +2575,10 @@ renderProfile();
 document.getElementById("navMenu").addEventListener("click", openDrawer);
 document.getElementById("navLb").addEventListener("click", ()=>showTab("leaderboard"));
 document.getElementById("navWatch").addEventListener("click", ()=>window.open("https://www.masters.com/en_US/watch/index.html","_blank"));
-document.getElementById("navCaptains").addEventListener("click", ()=>{
-  openDrawer();
-  document.getElementById("drawerCaptainsSection").scrollIntoView({behavior:"smooth", block:"start"});
-});
 document.getElementById("navHome").addEventListener("click", ()=>showTab("home"));
 document.getElementById("navHome").style.cursor = "pointer";
-document.getElementById("navAccount").addEventListener("click", ()=>{
+document.getElementById("navAccount").addEventListener("click", e=>{
+  e.stopPropagation();
   if (!getMe()){ alert("Sign in via the splash."); return; }
   document.getElementById("profileMenu").classList.toggle("open");
 });
@@ -2554,8 +2603,8 @@ document.getElementById("profileSignOut").addEventListener("click", ()=>{
 });
 document.addEventListener("click", e=>{
   const menu = document.getElementById("profileMenu");
-  const btn = document.getElementById("profileBtn");
-  if (menu && !menu.contains(e.target) && !btn.contains(e.target)) menu.classList.remove("open");
+  const acct = document.getElementById("navAccount");
+  if (menu && !menu.contains(e.target) && !acct.contains(e.target)) menu.classList.remove("open");
 });
 showTab("home");
 load();
