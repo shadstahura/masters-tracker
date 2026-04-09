@@ -296,7 +296,7 @@
   .profile-menu button:hover{background:var(--gold);color:var(--green-darker)}
 
   /* HAMBURGER + DRAWER */
-  .hamburger{
+  .hamburger{display:none !important;
     position:fixed;top:62px;left:18px;z-index:50;
     width:46px;height:46px;border-radius:10px;
     background:var(--green-dk);border:1px solid var(--gold);cursor:pointer;
@@ -1005,10 +1005,10 @@
     <a id="navMenu">Menu</a>
     <a id="navLb">Leader Board</a>
     <a id="navWatch">Watch Live</a>
+    <a id="navCaptains">Captains</a>
   </div>
-  <div class="center-logo">
-    <span class="flag">⛳</span>
-    <span class="word">Masters</span>
+  <div class="center-logo" id="navHome">
+    <span style="font-family:'Playfair Display',Georgia,serif;font-weight:900;font-size:32px;color:var(--green-dk);font-style:italic;letter-spacing:.5px">Masters</span>
   </div>
   <div class="right">
     <a class="acct" id="navAccount">
@@ -1021,12 +1021,6 @@
 <!-- Big hero -->
 <div class="m-hero">
   <div class="augusta-bg" id="augustaBg"></div>
-  <div style="position:relative;z-index:2;text-align:center;width:100%;padding:30px 20px">
-    <h1>Savoring the Day</h1>
-    <div class="m-hero-photo">
-      <div class="placeholder">⛳ Augusta National · Live from the 16th hole</div>
-    </div>
-  </div>
 </div>
 <div class="gold-stripe"></div>
 
@@ -1054,16 +1048,13 @@
     <div class="sub">Like No Other · 2026</div>
   </div>
   <div class="drawer-section">
-    <button class="drawer-item" data-tab="home"><span class="icon">⛳</span>Home</button>
-    <button class="drawer-item" data-tab="leaderboard"><span class="icon">⛳</span>Leaderboard</button>
     <button class="drawer-item" data-tab="challenges"><span class="icon">⚔️</span>Challenges</button>
     <button class="drawer-item" data-tab="bookie"><span class="icon">💰</span>Bookie</button>
     <button class="drawer-item" data-tab="beat"><span class="icon">🎯</span>Beat the Bookie</button>
   </div>
-  <div class="drawer-section">
+  <div class="drawer-section" id="drawerCaptainsSection">
     <span class="label">Captains</span>
-    <button class="drawer-item" id="capExpand"><span class="icon">👤</span>Captain Pages<span class="chev">▶</span></button>
-    <div class="drawer-cap-list" id="drawerCapList"></div>
+    <div class="drawer-cap-list open" id="drawerCapList"></div>
   </div>
 </aside>
 
@@ -1488,10 +1479,6 @@ const capList = document.getElementById("drawerCapList");
 capList.innerHTML = Object.keys(TEAMS).map(m=>`<button class="drawer-cap-item" data-cap="${m}">${displayName(m)}</button>`).join("");
 capList.querySelectorAll(".drawer-cap-item").forEach(btn=>{
   btn.addEventListener("click", ()=>{ showTab(btn.dataset.cap); closeDrawer(); });
-});
-document.getElementById("capExpand").addEventListener("click", function(){
-  this.classList.toggle("expanded");
-  capList.classList.toggle("open");
 });
 function showTab(name){
   document.querySelectorAll(".drawer-item[data-tab]").forEach(t=>t.classList.toggle("active", t.dataset.tab===name));
@@ -2536,6 +2523,12 @@ renderProfile();
 document.getElementById("navMenu").addEventListener("click", openDrawer);
 document.getElementById("navLb").addEventListener("click", ()=>showTab("leaderboard"));
 document.getElementById("navWatch").addEventListener("click", ()=>window.open("https://www.masters.com/en_US/watch/index.html","_blank"));
+document.getElementById("navCaptains").addEventListener("click", ()=>{
+  openDrawer();
+  document.getElementById("drawerCaptainsSection").scrollIntoView({behavior:"smooth", block:"start"});
+});
+document.getElementById("navHome").addEventListener("click", ()=>showTab("home"));
+document.getElementById("navHome").style.cursor = "pointer";
 document.getElementById("navAccount").addEventListener("click", ()=>{
   if (!getMe()){ alert("Sign in via the splash."); return; }
   document.getElementById("profileMenu").classList.toggle("open");
